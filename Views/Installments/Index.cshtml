@@ -1,0 +1,130 @@
+@model IEnumerable<MvcPicashNetCore.Models.Installment>
+
+@{
+    ViewData["Title"] = "Index";
+    
+}
+
+<h1>Cuotas</h1>
+
+<p>
+    <!-- <a asp-action="Create">Crear</a> -->
+</p>
+
+<form asp-controller="Installments" asp-action="Index" method="get">
+    <p>
+        
+@using(Html.BeginForm(null, null, FormMethod.Get))
+{
+    <fieldset>
+        
+        @Html.Label("route", "Ruta:")
+        @Html.DropDownList("routeId", (SelectList) ViewData["RouteId"], "Todos")
+
+        @Html.Label("tprestamo", "T. Prestamo:")
+        @Html.DropDownList("loanTypeId", (SelectList) ViewData["LoanTypeId"], "Todos")
+
+        @Html.Label("fechaVenc", "F. Venc.")
+        @Html.TextBox("dueDate", ViewData["dateFieldToday"], new { type = "date" })
+
+        <!-- @Html.Label("maxHijos", "Hijos máx:")
+        @Html.TextBox("maxHijos" ) -->
+ 
+        <input type="image" value="Buscar"  src="~/images/search.svg" alt="Crediflash" class="img-responsive img-sm" style="width:26px;height:26px;"/>
+    </fieldset>
+}
+
+
+
+        <!-- <div class="form-group">
+                <label asp-for="Birthdate" class="control-label"></label>
+                <input asp-for="Birthdate" class="form-control" />
+                <span asp-validation-for="Birthdate" class="text-danger"></span>
+        </div> -->
+        <!-- Title: <input type="text" asp-for="SearchString" /> -->
+        
+    </p>
+</form>
+
+<div class="table-responsive text-nowrap">
+    <table class="table">
+        <thead>
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.Loan.LoanType.Code)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Loan.Customer.Name) 
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Loan.Customer.SurName) 
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.PaymentAmount)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Amount)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.InstallmentNumber)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Duedate)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.InstallmentStatus)
+                </th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+    @foreach (var item in Model) {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Loan.LoanType.Code)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Loan.Customer.Name) 
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Loan.Customer.SurName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.PaymentAmount)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Amount)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.InstallmentNumber)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Duedate)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.InstallmentStatus)
+                </td>
+                <td>
+                    <a asp-action="Edit" asp-route-id="@item.InstallmentId"><img src="~/images/edit.svg" alt="Crediflash" class="img-responsive img-sm" style="width:16px;height:16px;" /></a>
+                    <!-- <a asp-action="Details" asp-route-id="@item.InstallmentId">Details</a> | -->
+                    <!-- <a asp-action="Delete" asp-route-id="@item.InstallmentId">Delete</a> -->
+                </td>
+            </tr>
+    }
+        </tbody>
+    </table>
+</div>
+
+@{
+    @using (Html.BeginForm(
+        "Close", "Installments", 
+        new { loanTypeId = ViewData["LoanTypeIdSelected"], dueDate= @ViewData["dateFieldToday"], routeId=@ViewData["RouteIdSelected"] }, 
+        FormMethod.Post))   
+    {
+        if((bool)@ViewData["DesableCloseCollectionBtn"] == true){        
+            <input type="submit" name="btnCloseCollection" class="btn btn-secondary  float-right" value="Cerrar Cobranza" disabled />
+        }else{
+            <input type="submit" name="btnCloseCollection" class="btn btn-primary  float-right" value="Cerrar Cobranza"  />
+        }
+    }
+}

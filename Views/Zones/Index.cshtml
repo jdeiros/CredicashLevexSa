@@ -1,0 +1,41 @@
+@model IEnumerable<MvcPicashNetCore.Models.Zone>
+
+@{
+    ViewData["Title"] = "Zonas";
+}
+
+<h1>Zonas</h1>
+
+<p>
+    <a asp-action="Create">Crear nueva Zona</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Code)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Name)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Code)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Name)
+            </td>
+            <td>
+                <a asp-action="Edit" asp-route-id="@item.ZoneId"><img src="~/images/edit.svg" alt="Crediflash" class="img-responsive img-sm" style="width:16px;height:16px;" /></a> |
+                <a asp-action="Details" asp-route-id="@item.ZoneId"><img src="~/images/details.svg" alt="Crediflash" class="img-responsive img-sm" style="width:16px;height:16px;" /></a> |
+                <a asp-action="Delete" asp-route-id="@item.ZoneId"><img src="~/images/delete.svg" alt="Crediflash" class="img-responsive img-sm" style="width:16px;height:16px;" /></a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

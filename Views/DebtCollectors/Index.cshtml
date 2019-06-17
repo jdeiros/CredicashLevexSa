@@ -1,0 +1,67 @@
+@model IEnumerable<MvcPicashNetCore.Models.DebtCollector>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Cobradores</h1>
+
+<p>
+    <a asp-action="Create">Crear Nuevo Cobrador</a>
+</p>
+<div class="table-responsive text-nowrap">
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Name)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.SurName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Birthdate)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.CellPhone)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.OptionalContact)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Zone.Code)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Name)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.SurName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Birthdate)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.CellPhone)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.OptionalContact)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Zone.Code)
+            </td>
+            <td>
+                <a asp-action="Edit" asp-route-id="@item.DebtCollectorId"><img src="~/images/edit.svg" alt="Crediflash" class="img-responsive img-sm" style="width:16px;height:16px;" /></a> |
+                <a asp-action="Details" asp-route-id="@item.DebtCollectorId"><img src="~/images/details.svg" alt="Crediflash" class="img-responsive img-sm" style="width:16px;height:16px;" /></a> |
+                <a asp-action="Delete" asp-route-id="@item.DebtCollectorId"><img src="~/images/delete.svg" alt="Crediflash" class="img-responsive img-sm" style="width:16px;height:16px;" /></a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>
+</div>

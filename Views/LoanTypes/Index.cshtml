@@ -1,0 +1,61 @@
+@model IEnumerable<MvcPicashNetCore.Models.LoanType>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Tipos de Préstamos</h1>
+
+<p>
+    <a asp-action="Create">Crear Nuevo Tipo de Préstamo</a>
+</p>
+<div class="table-responsive text-nowrap">
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Code)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Description)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.InterestPercentage)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.InstallmentsAmount)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.CollectionWeek.Code)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Code)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Description)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.InterestPercentage)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.InstallmentsAmount)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.CollectionWeek.Code)
+            </td>
+            <td>
+                <a asp-action="Edit" asp-route-id="@item.LoanTypeId"><img src="~/images/edit.svg" alt="Crediflash" class="img-responsive img-sm" style="width:16px;height:16px;" /></a> |
+                <a asp-action="Details" asp-route-id="@item.LoanTypeId"><img src="~/images/details.svg" alt="Crediflash" class="img-responsive img-sm" style="width:16px;height:16px;" /></a> |
+                <a asp-action="Delete" asp-route-id="@item.LoanTypeId"><img src="~/images/delete.svg" alt="Crediflash" class="img-responsive img-sm" style="width:16px;height:16px;" /></a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>
+</div>

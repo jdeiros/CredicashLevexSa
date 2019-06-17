@@ -1,0 +1,161 @@
+@model MvcPicashNetCore.Models.Loan
+
+@{
+    ViewData["Title"] = "Crear";
+}
+
+
+            <legend>Crear Préstamo</legend>
+            @using(Html.BeginForm(null, null, FormMethod.Get))
+            {
+                <fieldset>
+                    @Html.Label("route", "Ruta:")
+                    @Html.DropDownList("routeId", (SelectList) ViewData["RouteId"], "Todos")
+                   <input type="image" value="Buscar"  src="~/images/search.svg" alt="Crediflash" class="img-responsive img-sm" style="width:26px;height:26px;"/>
+                </fieldset>
+            }
+
+<hr />
+
+<div class="row">
+    
+    <div class="col-md-12 text-nowrap col-responsive">
+
+        <form asp-action="Create">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                <div class="row">
+                    <div class="col">
+                        <div class="form-group">
+                            <label asp-for="TotalAmmount" class="control-label"></label>
+                            <input asp-for="TotalAmmount" class="form-control" />
+                            <span asp-validation-for="TotalAmmount" class="text-danger"></span>
+                        </div>
+                    </div>
+
+                   
+
+                    <div class="col">
+                        <div class="form-group">
+                            <label asp-for="CustomerId" class="control-label"></label>
+                            <select asp-for="CustomerId" class ="form-control" asp-items="ViewBag.CustomerId"></select>
+                        </div>
+                    </div>
+                    <div class="col">
+                        <div class="form-group">
+                            <label asp-for="LoanTypeId" class="control-label"></label>
+                            <select asp-for="LoanTypeId" class ="form-control" asp-items="ViewBag.LoanTypeId"></select>
+                        </div>
+                    </div>
+                    <div class="col">
+                        <div class="form-group">
+                            <p></p><p></p>
+                            <input type="submit" value="Crear Prestamo" class="btn btn-danger float-right" />
+                            <!-- @Html.ActionLink("Simulador", "Loans", "Simulation", null, new {miAtributo ="Valor1", @class = "btn btn-danger"}) -->
+                        </div>
+                    </div>
+                </div>
+            
+        </form>
+        
+    </div>
+
+
+    <div class="container-sm col-md-12">
+
+
+        <div class="row">
+            <legend>Datos del préstamo: @Html.DisplayFor(model => model.Customer.Name) @Html.DisplayFor(model => model.Customer.SurName)</legend>
+            <p>A Cobrar: @ViewBag.LoanTotalAmountWithInterest</p>
+            <table class="table table-responsive text-nowrap">
+                <tbody>
+                    <tr>
+                        <td></td>
+                        <td>
+                            <p><li>@Html.DisplayNameFor(model => model.CreationDate):  @Html.DisplayFor(model => model.CreationDate)</li></p>
+                            <p><li>@Html.DisplayNameFor(model => model.DateFrom):  @Html.DisplayFor(model => model.DateFrom)</li></p>
+                        </td>
+                        <td>
+                            <p><li>@Html.DisplayNameFor(model => model.DateTo): @Html.DisplayFor(model => model.DateTo)</li></p>
+                            <p><li>@Html.DisplayNameFor(model => model.LoanType.InstallmentsAmount): @Html.DisplayFor(model => model.LoanType.InstallmentsAmount)</li></p>
+                        
+                        <td>
+                            <p><li>@Html.DisplayNameFor(model => model.TotalAmmount): @Html.DisplayFor(model => model.TotalAmmount)</li></p>
+                            <p><li>@Html.DisplayNameFor(model => model.LoanStatus): @Html.DisplayFor(model => model.LoanStatus)</li></p>
+                        </td>
+                        <td>    
+                            <p><li>@Html.DisplayNameFor(model => model.LoanType.InterestPercentage): @Html.DisplayFor(model => model.LoanType.InterestPercentage)</li></p>
+                            
+                        </td>
+                        <td></td>                                         
+                    </tr>
+                </tbody>
+            </table>
+            
+        </div>
+    </div>
+
+
+
+        
+        
+        
+            <div class="container col-md-12">
+                
+                <div class="table-responsive text-nowrap">
+                   <legend>Tabla de amortización</legend>
+                    
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th>
+                                    Cuota Nro.
+                                </th>
+                                
+                                <th>
+                                    Monto a pagar
+                                </th>
+                                
+                                <th>
+                                    Fecha de vencimiento
+                                </th>
+                            
+                            </tr>
+                        </thead>
+                        <tbody>
+                        @{
+                            if(ViewBag.MensajeCuotas != null)  
+                            {  
+                                @foreach (var item in (List<MvcPicashNetCore.Models.Installment>) @ViewBag.MensajeCuotas) 
+                                {
+                                    <tr>
+                                        <td>
+                                            @item.InstallmentNumber
+                                        </td>
+                                        
+                                        <td>
+                                            @String.Format("{0:C}", @item.Amount)
+                                        </td>
+                                        
+                                        <td>
+                                            @item.Duedate.ToString("dd/MM/yyyy")
+                                        </td>
+                                    </tr>
+                                }
+                            }
+                        }
+                        </tbody>
+                    </table>
+                </div>
+                
+            </div>
+        </div>        
+    
+
+
+<div>
+    <a asp-action="Index">Volver al Listado</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

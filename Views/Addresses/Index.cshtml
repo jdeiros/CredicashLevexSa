@@ -1,0 +1,68 @@
+@model IEnumerable<MvcPicashNetCore.Models.Address>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Direcciónes</h1>
+
+<p>
+    <a asp-action="Create">Crear Nueva Dirección</a>
+</p>
+
+@using(Html.BeginForm(null, null, FormMethod.Get))
+{
+    <fieldset>
+        
+        @Html.Label("route", "Ruta:")
+        @Html.DropDownList("routeId", (SelectList) ViewData["RouteId"], "Todos")
+
+        @Html.Label("Nombre", "Nombre")
+        @Html.TextBox("SearchString", ViewData["SearchString"], new { type = "text" })
+ 
+        <input type="image" value="Buscar"  src="~/images/search.svg" alt="Crediflash" class="img-responsive img-sm" style="width:26px;height:26px;"/>
+    </fieldset>
+}
+
+
+<div class="table-responsive text-nowrap">
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Description)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.IsMain)
+            </th>
+           <th>
+                @Html.DisplayNameFor(model => model.Customer.Name)
+            </th>
+            
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Description)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.IsMain)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Customer.Name)
+             
+                @Html.DisplayFor(modelItem => item.Customer.SurName)
+            </td>
+            <td>
+                <a asp-action="Edit" asp-route-id="@item.AddressId"><img src="~/images/edit.svg" alt="Crediflash" class="img-responsive img-sm" style="width:16px;height:16px;" /></a> |
+                <a asp-action="Details" asp-route-id="@item.AddressId"><img src="~/images/details.svg" alt="Crediflash" class="img-responsive img-sm" style="width:16px;height:16px;" /></a> |
+                <a asp-action="Delete" asp-route-id="@item.AddressId"><img src="~/images/delete.svg" alt="Crediflash" class="img-responsive img-sm" style="width:16px;height:16px;" /></a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>
+</div>
